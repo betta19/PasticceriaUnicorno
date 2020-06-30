@@ -15,6 +15,8 @@ public class Ingrediente {
 	private String nome;
 	
 	private double costoIngrediente;
+	
+	boolean disponibile;
 
 	public long getId() {
 		return id;
@@ -38,6 +40,14 @@ public class Ingrediente {
 
 	public void setCostoIngrediente(double costoIngrediente) {
 		this.costoIngrediente = costoIngrediente;
+	}
+
+	public boolean isDisponibile() {
+		return disponibile;
+	}
+
+	public void setDisponibile(boolean disponibile) {
+		this.disponibile = disponibile;
 	}
 
 	
