@@ -40,6 +40,13 @@ public class PasticceriaController {
 	@Autowired
 	private RicettaServiceDAO ricettaService;
 
+	
+	@GetMapping("/entra")
+    public String entraCome() {
+        return "add-user";
+    }
+	
+	
 	@PostMapping("/addCliente")
     public String addCliente( Cliente cliente, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -57,4 +64,6 @@ public class PasticceriaController {
         model.addAttribute("users", clienteService.findAllClienti());
         return "indexCliente";
     }
+	
+	
 }
