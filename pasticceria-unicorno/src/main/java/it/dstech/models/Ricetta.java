@@ -18,6 +18,7 @@ public class Ricetta {
 	
 	private String nome;
 	
+	
 	private String tempoDiRealizzazione;
 	
 	private int difficoltà;
