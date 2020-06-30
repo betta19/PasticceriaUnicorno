@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Dolce {
@@ -15,6 +16,9 @@ public class Dolce {
 	private String nome;
 	
 	private int quantita;
+	
+	@OneToOne
+	private Ricetta ricetta;
 	
 	private double costoDolce20;
 
@@ -41,6 +45,14 @@ public class Dolce {
 	public void setQuantita(int quantita) {
 		this.quantita = quantita;
 	}
+	
+	public Ricetta getRicetta() {
+		return ricetta;
+	}
+
+	public void setRicetta(Ricetta ricetta) {
+		this.ricetta = ricetta;
+	}
 
 	public double getCostoDolce20() {
 		return costoDolce20;
@@ -49,6 +61,8 @@ public class Dolce {
 	public void setCostoDolce20(double costoDolce20) {
 		this.costoDolce20 = costoDolce20;
 	}
+	
+	
 
 	
 	
