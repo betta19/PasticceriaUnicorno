@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Ricetta {
@@ -21,7 +22,7 @@ public class Ricetta {
 	
 	private int difficoltà;
 	
-	@ManyToOne
+	@OneToMany
 	private List<Ingrediente> ingredienti;
 	
 	private String descrizione;

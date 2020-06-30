@@ -9,7 +9,6 @@ import javax.persistence.Id;
 public class Amministratore {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	private String nome;

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Ordinazione {
@@ -15,9 +16,10 @@ public class Ordinazione {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@ManyToOne
 	private Cliente cliente;
 	
-	@ManyToOne
+	@OneToMany
 	private List<Dolce> dolce;
 	
 	private String data;

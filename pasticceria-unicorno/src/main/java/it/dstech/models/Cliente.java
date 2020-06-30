@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -20,8 +20,8 @@ public class Cliente {
 	
 	private String cognome;
 	
-	@ManyToOne
-	private List<String> ordinazioni;
+	@OneToMany
+	private List<Ordinazione> ordinazione;
 	
 	
 
@@ -49,13 +49,15 @@ public class Cliente {
 		this.cognome = cognome;
 	}
 
-	public List<String> getOrdinazioni() {
-		return ordinazioni;
+	public List<Ordinazione> getOrdinazioni() {
+		return ordinazione;
 	}
 
-	public void setOrdinazioni(List<String> ordinazioni) {
-		this.ordinazioni = ordinazioni;
+	public void setOrdinazioni(List<Ordinazione> ordinazioni) {
+		this.ordinazione = ordinazioni;
 	}
+
+	
 	
 	
 

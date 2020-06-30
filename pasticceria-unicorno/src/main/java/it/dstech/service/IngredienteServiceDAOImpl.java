@@ -1,7 +1,10 @@
 package it.dstech.service;
 
+import org.springframework.stereotype.Service;
+
 import it.dstech.models.Ingrediente;
 
+@Service
 public class IngredienteServiceDAOImpl implements IngredienteServiceDAO{
 
 	@Override
