@@ -6,6 +6,8 @@ public interface IngredienteServiceDAO {
 
 	boolean modificaIngrediente(Ingrediente i);
 
-	void rimuoviIngrediente(Ingrediente i);
+	boolean rimuoviIngrediente(Long id);
+
+	boolean addIngrediente(Ingrediente ingrediente);
 
 }

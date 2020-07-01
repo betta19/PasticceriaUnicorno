@@ -39,4 +39,14 @@ public class ClienteServiceDAOImpl implements ClienteServiceDAO {
 		return clienteRepo.findAll();
 
 	}
+
+	@Override
+	public Cliente findById(long id) {
+		return clienteRepo.findById(id);
+	}
+
+	@Override
+	public void save(Cliente cliente) {
+		clienteRepo.save(cliente);
+	}
 }

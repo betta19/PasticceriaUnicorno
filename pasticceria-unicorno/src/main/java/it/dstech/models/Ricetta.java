@@ -3,6 +3,7 @@ package it.dstech.models;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +24,8 @@ public class Ricetta {
 	
 	private int difficoltà;
 	
-	@OneToMany
-	private List<Ingrediente> ingredienti;
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Ingrediente> ingrediente;
 	
 	private String descrizione;
 	
@@ -62,12 +63,12 @@ public class Ricetta {
 		this.difficoltà = difficoltà;
 	}
 
-	public List<Ingrediente> getIngredienti() {
-		return ingredienti;
+	public List<Ingrediente> getIngrediente() {
+		return ingrediente;
 	}
 
-	public void setIngredienti(List<Ingrediente> ingredienti) {
-		this.ingredienti = ingredienti;
+	public void setIngrediente(List<Ingrediente> ingrediente) {
+		this.ingrediente = ingrediente;
 	}
 
 	public String getDescrizione() {

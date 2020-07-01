@@ -11,4 +11,8 @@ public interface ClienteServiceDAO {
 	boolean deleteCliente (Long id);
 	
 	List<Cliente> findAllClienti();
+
+	Cliente findById(long id);
+
+	void save(Cliente cliente);
 }
