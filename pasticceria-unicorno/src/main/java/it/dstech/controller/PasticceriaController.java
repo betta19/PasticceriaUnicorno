@@ -8,6 +8,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,7 @@ public class PasticceriaController {
 	private DolceServiceDAO dolceService;
 
 	@Autowired
-	private IngredienteServiceDAO ingredientiService;
+	private IngredienteServiceDAO ingredienteService;
 
 	@Autowired
 	private OrdinazioneServiceDAO ordinazioneService;
@@ -66,8 +67,8 @@ public class PasticceriaController {
 	}
 
 	@GetMapping("/addCliente")
-	public String addCliente() {
-		
+	public String addCliente(Cliente cliente) {
+
 		return "add-cliente";
 	}
 
@@ -89,17 +90,18 @@ public class PasticceriaController {
 		return "modifica-cliente";
 	}
 
-//	@PostMapping("/modificaCliente/{id}")
-//	public String salvaModificheCliente(@PathVariable("id") long id, @RequestBody Cliente cliente,
-//			Model model) {
-//		if (result.hasErrors()) {
-//			return "modifica-cliente";
-//		}
-//
-//		clienteService.save(cliente);
-//		model.addAttribute("cliente", clienteService.findAllClienti());
-//		return "index";
-//	}
+	@PostMapping("/modificaCliente/{id}")
+	public String salvaModificheCliente(@PathVariable("id") long id, @RequestBody Cliente cliente, BindingResult result,
+			Model model) {
+		model.addAttribute("cliente", clienteService.findAllClienti());
+		if (result.hasErrors()) {
+			return "index";
+		}
+
+		clienteService.save(cliente);
+		
+		return "index";
+	}
 
 	@GetMapping("/eliminaC/{id}")
 	public String deleteCliente(@PathVariable("id") long id, Model model) {
@@ -109,21 +111,28 @@ public class PasticceriaController {
 	}
 
 	@GetMapping("/aggiungiIngrediente")
-	public String aggiungiIngrediente() {
-
+	public String aggiungiIngrediente(Ingrediente ingrediente, Model model) {
+		model.addAttribute("listaIngrediente", ingredienteService.findAllIngrediente());
 		return "add-ingrediente";
 	}
-	
+
 	@PostMapping("/addIngrediente")
 	public String addIngrediente(Ingrediente ingrediente, BindingResult result, Model model) {
-		
+
 		if (result.hasErrors()) {
 			return "index";
 		}
 
-		ingredientiService.addIngrediente(ingrediente);
+		ingredienteService.addIngrediente(ingrediente);
 		model.addAttribute("messaggio", "Ingrediente aggiunto");
 
+		return "opzioniAdmin";
+	}
+
+	@GetMapping("/eliminaI/{id}")
+	public String deleteIngrediente(@PathVariable("id") long id, Model model) {
+		ingredienteService.rimuoviIngrediente(id);
+		model.addAttribute("messaggio", "Ingrediente eliminato");
 		return "opzioniAdmin";
 	}
 

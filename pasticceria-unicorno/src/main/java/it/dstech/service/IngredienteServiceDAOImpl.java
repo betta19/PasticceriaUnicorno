@@ -1,5 +1,7 @@
 package it.dstech.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +10,8 @@ import it.dstech.models.Ingrediente;
 import it.dstech.repository.IngredienteRepository;
 
 @Service
-public class IngredienteServiceDAOImpl implements IngredienteServiceDAO{
-	
+public class IngredienteServiceDAOImpl implements IngredienteServiceDAO {
+
 	@Autowired
 	public IngredienteRepository ingredienteRepo;
 
@@ -25,20 +27,26 @@ public class IngredienteServiceDAOImpl implements IngredienteServiceDAO{
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		ingredienteRepo.delete(ingrediente);
 		return true;
-		
+
 	}
 
 	@Override
 	public boolean addIngrediente(Ingrediente ingrediente) {
+		ingrediente.setDisponibile(true);
+		
 		if (ingredienteRepo.existsById(ingrediente.getId())) {
-			Ingrediente sovrascriviUtente = ingrediente;
-
-			ingredienteRepo.save(sovrascriviUtente);
+			Ingrediente sovrascriviIngrediente = ingrediente;
+			ingredienteRepo.save(sovrascriviIngrediente);
 		}
 
 		Ingrediente save = ingredienteRepo.save(ingrediente);
 		return save != null;
-		
+
+	}
+
+	public List<Ingrediente> findAllIngrediente() {
+		return ingredienteRepo.findAll();
+
 	}
 
 }
