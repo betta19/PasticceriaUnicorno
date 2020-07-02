@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.dstech.models.Cliente;
+import it.dstech.models.Dolce;
 import it.dstech.models.Ingrediente;
 import it.dstech.models.Ricetta;
 import it.dstech.repository.ClienteRepository;
@@ -210,9 +211,36 @@ public class PasticceriaController {
 	}
 
 	@GetMapping("/aggiungiDolce")
-	public String addDolce() {
-
+	public String addDolce(Dolce dolce, Ricetta ricetta, Model model) {
+		model.addAttribute("listaRicetta", ricettaService.findAllRicette());
+		model.addAttribute("listaDolci", dolceService.findAllDolci());
 		return "add-dolce";
 	}
+	
+	@PostMapping("/addDolce")
+	public String salvaDolce(Dolce dolce, Ricetta ricetta, BindingResult result, Model model) {
+		
+		Ricetta recipe = ricettaService.findById(ricetta.getId());
+		
+		if (result.hasErrors()) {
+			return "index";
+		}
+		
+		dolceService.addDolce(dolce, recipe);
+		model.addAttribute("messaggio", "Dolce aggiunto");
+
+
+		return "opzioniAdmin";
+	}
+	
+	@GetMapping("/eliminaD/{id}")
+	public String deleteDolce(@PathVariable("id") long id, Model model) {
+		dolceService.rimuoviDolce(id);
+		model.addAttribute("messaggio", "Dolce eliminato");
+		return "opzioniAdmin";
+	}
+	
+	
+	
 
 }
