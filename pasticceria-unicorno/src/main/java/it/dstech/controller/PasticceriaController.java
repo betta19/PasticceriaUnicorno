@@ -91,13 +91,13 @@ public class PasticceriaController {
 	}
 
 	@PostMapping("/modificaCliente/{id}")
-	public String salvaModificheCliente(@PathVariable("id") long id, @RequestBody Cliente cliente, BindingResult result,
+	public String salvaModificheCliente(@PathVariable("id") long id, Cliente cliente, BindingResult result,
 			Model model) {
 		model.addAttribute("cliente", clienteService.findAllClienti());
 		if (result.hasErrors()) {
 			return "index";
 		}
-
+		cliente.setId(id);
 		clienteService.save(cliente);
 		
 		return "index";
