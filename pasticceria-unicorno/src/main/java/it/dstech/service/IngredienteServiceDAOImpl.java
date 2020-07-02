@@ -58,11 +58,11 @@ public class IngredienteServiceDAOImpl implements IngredienteServiceDAO {
 	}
 
 	@Override
-	public boolean aggiungiIngredienteARicetta(Long id, Ricetta ricetta) {
+	public Ingrediente aggiungiIngredienteARicetta(Long id) {
 		 Ingrediente ingrediente = ingredienteRepo.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		ricetta.getIngrediente().add(ingrediente);
-		return true;
+	
+		return ingrediente;
 	}
 
 }

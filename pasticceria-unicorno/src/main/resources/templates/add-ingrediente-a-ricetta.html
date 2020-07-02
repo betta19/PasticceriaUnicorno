@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Add Ingredients</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+	<form action="#" th:action="@{/salvaIngredientiRicetta}"
+		th:object="${ingrediente}" >
+		<input type="hidden" th:field="${ricetta.id}" name="id"/>
+		<h2 th:text="${ricetta.nome}"></h2>
+		<br> <br>
+		<div th:switch="${listaIngrediente}" class="container my-5">
+			<div class="row">
+				<div class="col-md-6" align="left">
+					<h2 th:case="null">No ingredients yet!</h2>
+					<div th:case="*">
+						<h2 class="my-5">Ingredienti</h2>
+						<table class="table table-striped table-responsive-md">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Nome</th>
+									<th>Costo</th>
+									<th>Disponibilità</th>
+									<th>Aggiungi</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="ingrediente : ${listaIngrediente}">
+									<td th:text="${ingrediente.id}"></td>
+									<td th:text="${ingrediente.nome}"></td>
+									<td th:text="${ingrediente.costoIngrediente}"></td>
+									<td th:text="${ingrediente.disponibile}"></td>
+									<td><a
+										th:href="@{/salvaIngredientiRicetta/{id}(id=${ingrediente.id})}"
+										class="btn btn-primary"></a></td>
+
+
+								</tr>
+							</tbody>
+						</table>
+						</div>
+
+	</div>
+	<br>
+	<br>
+	</div>
+	</div>
+	</form>
+	<h2>Fatto!</h2>
+	<a th:href
+			="@{/fineRicetta}"
+									class="btn btn-primary"></a>
+	
+
+
+	
+</body>
+</html>

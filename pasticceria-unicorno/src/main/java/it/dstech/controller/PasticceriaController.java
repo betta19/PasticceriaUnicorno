@@ -164,9 +164,15 @@ public class PasticceriaController {
 	@GetMapping("/aggiungiRicetta")
 	public String addRicetta(Model model, Ricetta ricetta) {
 		model.addAttribute("listaRicetta", ricettaService.findAllRicette());
-		model.addAttribute("listaIngrediente", ingredienteService.findAllIngrediente());
+		
 		return "add-ricetta";
 	}
+	
+	@GetMapping ("/fineRicetta")
+	public String fineRicetta () {
+		return "opzioniAdmin";
+	}
+	
 	
 	@PostMapping("/addRicetta")
 	public String addIngrediente(@RequestParam("command") String command, Ricetta ricetta, BindingResult result, Model model) {
@@ -177,20 +183,23 @@ public class PasticceriaController {
 		
 		ricetta.setDifficolta(Integer.parseInt(command));
 		ricettaService.addRicetta(ricetta);
+		model.addAttribute("listaIngrediente", ingredienteService.findAllIngrediente());
 		model.addAttribute("messaggio", "Ricetta aggiunta");
+		model.addAttribute("ricetta", ricetta);
 
-		return "opzioniAdmin";
+		return "add-ingrediente-a-ricetta";
 	}
 	
-	@GetMapping("/salvaIngredientiRicetta/{idIngrediente}")
-	public String addIngredientiRicetta(@PathVariable("idIngrediente") long id, Model model, Ricetta ricetta) {
+	@GetMapping("/salvaIngredientiRicetta/{id}")
+	public String addIngredientiRicetta(@PathVariable("id") long id, Model model, Ricetta ricetta) {
 		Ricetta recipe= ricettaService.findById(ricetta.getId());
-		ingredienteService.aggiungiIngredienteARicetta(id, recipe);
+//		recipe.setId(ricetta.getId());
+		recipe.getIngrediente().add(ingredienteService.aggiungiIngredienteARicetta(id));
 		ricettaService.addRicetta(recipe);
-		model.addAttribute("listaRicetta", ricettaService.findAllRicette());
+	
 		model.addAttribute("listaIngrediente", ingredienteService.findAllIngrediente());
-		model.addAttribute("ricetta", ricetta);
-		return "add-ricetta";
+		model.addAttribute("ricetta", recipe);
+		return "add-ingrediente-a-ricetta";
 	}
 	
 	@GetMapping("/eliminaR/{id}")

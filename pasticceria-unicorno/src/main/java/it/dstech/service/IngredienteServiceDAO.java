@@ -10,7 +10,7 @@ public interface IngredienteServiceDAO {
 
 	boolean rimuoviIngrediente(Long id);
 	
-	boolean aggiungiIngredienteARicetta(Long id, Ricetta ricetta);
+	Ingrediente aggiungiIngredienteARicetta(Long id);
 
 	boolean addIngrediente(Ingrediente ingrediente);
 	
