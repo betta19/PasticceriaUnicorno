@@ -23,6 +23,7 @@
 								<th>Nome</th>
 								<th>Costo</th>
 								<th>Disponibilità</th>
+								<th>Modifica</th>
 								<th>Elimina</th>
 							</tr>
 						</thead>
@@ -31,8 +32,11 @@
 								<td th:text="${ingrediente.nome}"></td>
 								<td th:text="${ingrediente.costoIngrediente}"></td>
 								<td th:text="${ingrediente.disponibile}"></td>
+								<td><a th:href="@{/modificaI/{id}(id=${ingrediente.id})}"
+									class="btn btn-primary"></a></td>
 								<td><a th:href="@{/eliminaI/{id}(id=${ingrediente.id})}"
 									class="btn btn-primary"></a></td>
+								
 							</tr>
 						</tbody>
 					</table>

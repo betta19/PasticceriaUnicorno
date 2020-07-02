@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import it.dstech.models.Cliente;
 import it.dstech.models.Ingrediente;
+import it.dstech.models.Ricetta;
 import it.dstech.repository.IngredienteRepository;
 
 @Service
@@ -15,11 +16,6 @@ public class IngredienteServiceDAOImpl implements IngredienteServiceDAO {
 	@Autowired
 	public IngredienteRepository ingredienteRepo;
 
-	@Override
-	public boolean modificaIngrediente(Ingrediente i) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean rimuoviIngrediente(Long id) {
@@ -47,6 +43,26 @@ public class IngredienteServiceDAOImpl implements IngredienteServiceDAO {
 	public List<Ingrediente> findAllIngrediente() {
 		return ingredienteRepo.findAll();
 
+	}
+
+	@Override
+	public Ingrediente findById(long id) {
+		
+		return ingredienteRepo.findById(id);
+	}
+
+	@Override
+	public void save(Ingrediente ingrediente) {
+		ingredienteRepo.save(ingrediente);
+		
+	}
+
+	@Override
+	public boolean aggiungiIngredienteARicetta(Long id, Ricetta ricetta) {
+		 Ingrediente ingrediente = ingredienteRepo.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		ricetta.getIngrediente().add(ingrediente);
+		return true;
 	}
 
 }

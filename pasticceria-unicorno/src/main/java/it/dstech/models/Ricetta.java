@@ -22,7 +22,7 @@ public class Ricetta {
 	
 	private String tempoDiRealizzazione;
 	
-	private int difficoltà;
+	private int difficolta;
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Ingrediente> ingrediente;
@@ -55,12 +55,12 @@ public class Ricetta {
 		this.tempoDiRealizzazione = tempoDiRealizzazione;
 	}
 
-	public int getDifficoltà() {
-		return difficoltà;
+	public int getDifficolta() {
+		return difficolta;
 	}
 
-	public void setDifficoltà(int difficoltà) {
-		this.difficoltà = difficoltà;
+	public void setDifficolta(int difficolta) {
+		this.difficolta = difficolta;
 	}
 
 	public List<Ingrediente> getIngrediente() {
@@ -85,6 +85,13 @@ public class Ricetta {
 
 	public void setCostoRicetta10(double costoRicetta10) {
 		this.costoRicetta10 = costoRicetta10;
+	}
+
+	@Override
+	public String toString() {
+		return "Ricetta [id=" + id + ", nome=" + nome + ", tempoDiRealizzazione=" + tempoDiRealizzazione
+				+ ", difficolta=" + difficolta + ", ingrediente=" + ingrediente + ", descrizione=" + descrizione
+				+ ", costoRicetta10=" + costoRicetta10 + "]";
 	}
 
 

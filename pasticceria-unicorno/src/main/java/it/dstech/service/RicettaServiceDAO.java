@@ -1,11 +1,18 @@
 package it.dstech.service;
 
+import java.util.List;
+
+
 import it.dstech.models.Ricetta;
 
 public interface RicettaServiceDAO {
 
-	boolean salvaRicetta(Ricetta r);
+	boolean rimuoviRicetta(Long id);
 
-	void rimuoviRicetta(Ricetta t);
+	List<Ricetta> findAllRicette();
+
+	boolean addRicetta(Ricetta ricetta);
+
+	Ricetta findById(long id);
 
 }

@@ -50,6 +50,12 @@ public class Ingrediente {
 		this.disponibile = disponibile;
 	}
 
+	@Override
+	public String toString() {
+		return "Ingrediente [id=" + id + ", nome=" + nome + ", costoIngrediente=" + costoIngrediente + ", disponibile="
+				+ disponibile + "]";
+	}
+
 	
 	
 

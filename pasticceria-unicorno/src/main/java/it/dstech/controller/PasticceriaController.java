@@ -1,5 +1,6 @@
 package it.dstech.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.dstech.models.Cliente;
 import it.dstech.models.Ingrediente;
+import it.dstech.models.Ricetta;
 import it.dstech.repository.ClienteRepository;
+import it.dstech.repository.RicettaRepository;
 import it.dstech.service.AmministratoreServiceDAO;
 import it.dstech.service.ClienteServiceDAO;
 import it.dstech.service.DolceServiceDAO;
@@ -128,6 +131,28 @@ public class PasticceriaController {
 
 		return "opzioniAdmin";
 	}
+	
+
+	@GetMapping("/modificaI/{id}")
+	public String modificaIngrediente(@PathVariable("id") long id, Model model) {
+		Ingrediente ingrediente = ingredienteService.findById(id);
+		model.addAttribute("ingrediente", ingrediente);
+		return "modifica-ingrediente";
+	}
+
+	@PostMapping("/modificaIngrediente/{id}")
+	public String salvaModificheIngrediente(@PathVariable("id") long id, Ingrediente ingrediente, BindingResult result,
+			Model model) {
+		model.addAttribute("listaIngrediente", ingredienteService.findAllIngrediente());
+		if (result.hasErrors()) {
+			return "index";
+		}
+		ingrediente.setId(id);
+		ingrediente.setDisponibile(true);
+		ingredienteService.save(ingrediente);
+		model.addAttribute("ingrediente", new Ingrediente());
+		return "add-ingrediente";
+	}
 
 	@GetMapping("/eliminaI/{id}")
 	public String deleteIngrediente(@PathVariable("id") long id, Model model) {
@@ -137,9 +162,42 @@ public class PasticceriaController {
 	}
 
 	@GetMapping("/aggiungiRicetta")
-	public String addRicetta(Model model) {
-		// model.addAttribute("ingredienti", ingredientiService.findAll());
+	public String addRicetta(Model model, Ricetta ricetta) {
+		model.addAttribute("listaRicetta", ricettaService.findAllRicette());
+		model.addAttribute("listaIngrediente", ingredienteService.findAllIngrediente());
 		return "add-ricetta";
+	}
+	
+	@PostMapping("/addRicetta")
+	public String addIngrediente(@RequestParam("command") String command, Ricetta ricetta, BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			return "index";
+		}
+		
+		ricetta.setDifficolta(Integer.parseInt(command));
+		ricettaService.addRicetta(ricetta);
+		model.addAttribute("messaggio", "Ricetta aggiunta");
+
+		return "opzioniAdmin";
+	}
+	
+	@GetMapping("/salvaIngredientiRicetta/{idIngrediente}")
+	public String addIngredientiRicetta(@PathVariable("idIngrediente") long id, Model model, Ricetta ricetta) {
+		Ricetta recipe= ricettaService.findById(ricetta.getId());
+		ingredienteService.aggiungiIngredienteARicetta(id, recipe);
+		ricettaService.addRicetta(recipe);
+		model.addAttribute("listaRicetta", ricettaService.findAllRicette());
+		model.addAttribute("listaIngrediente", ingredienteService.findAllIngrediente());
+		model.addAttribute("ricetta", ricetta);
+		return "add-ricetta";
+	}
+	
+	@GetMapping("/eliminaR/{id}")
+	public String deleteRicetta(@PathVariable("id") long id, Model model) {
+		ricettaService.rimuoviRicetta(id);
+		model.addAttribute("messaggio", "Ricetta eliminata");
+		return "opzioniAdmin";
 	}
 
 	@GetMapping("/aggiungiDolce")

@@ -2,17 +2,22 @@ package it.dstech.service;
 
 import java.util.List;
 
-
+import it.dstech.models.Cliente;
 import it.dstech.models.Ingrediente;
+import it.dstech.models.Ricetta;
 
 public interface IngredienteServiceDAO {
 
-	boolean modificaIngrediente(Ingrediente i);
-
 	boolean rimuoviIngrediente(Long id);
+	
+	boolean aggiungiIngredienteARicetta(Long id, Ricetta ricetta);
 
 	boolean addIngrediente(Ingrediente ingrediente);
 	
 	List<Ingrediente> findAllIngrediente();
+	
+	Ingrediente findById(long id);
+	
+	void save(Ingrediente ingrediente);
 
 }
