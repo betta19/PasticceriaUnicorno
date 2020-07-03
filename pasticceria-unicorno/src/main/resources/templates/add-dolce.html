@@ -62,18 +62,29 @@
 						type="number" th:field="*{quantita}" id="quantita"
 						placeholder="Quantita">
 				</div>
-				<input type="submit" class="btn btn-primary" value="Add Dolce">
-			</form>
+				
+			Scegli ricetta
 			<div class="form-group col-md-6">
-				<label for="ricetta" class="col-form-label">Ricetta</label> <select
-					th:field="*{ricetta}">
-					<option th:each="i : ${listaRicetta}" th:value="${i}"
-						th:text="${i.getNome()}"></option>
+				
+				
+		<ul>		
+        <li th:each="r : ${listaRicetta}">
+            <input type="radio" th:object="${ricetta}" th:value="${r.id}" th:name="idRicetta" />
+              <label th:for="${listaRicetta}" th:text="${r.nome}"></label>
+        </li>
+    </ul>
+<!-- 				<select -->
+<!-- 					th:field="*{ricetta}"> -->
+<!-- 					<option th:each="i : ${listaRicetta}" th:value="${i}" -->
+<!-- 						th:text="${i.getNome()}"></option> -->
 						
-				</select>
-				<input type="hidden" th:field="${ricetta.id}" name="id" />
+<!-- 				</select> -->
+<div>
+				
 			</div>
-
+			<input type="submit" class="btn btn-primary" value="Add Dolce">
+			</div>
+</form>
 		</div>
 	</div>
 

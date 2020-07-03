@@ -218,15 +218,15 @@ public class PasticceriaController {
 	}
 	
 	@PostMapping("/addDolce")
-	public String salvaDolce(Dolce dolce, Ricetta ricetta, BindingResult result, Model model) {
+	public String salvaDolce(Dolce dolce, @RequestParam("idRicetta") String idRicetta, BindingResult result, Model model) {
 		
-		Ricetta recipe = ricettaService.findById(ricetta.getId());
+//		Ricetta recipe = ricettaService.findById(ricetta.getId());
 		
 		if (result.hasErrors()) {
 			return "index";
 		}
 		
-		dolceService.addDolce(dolce, recipe);
+		dolceService.addDolce(dolce, Long.parseLong(idRicetta));
 		model.addAttribute("messaggio", "Dolce aggiunto");
 
 

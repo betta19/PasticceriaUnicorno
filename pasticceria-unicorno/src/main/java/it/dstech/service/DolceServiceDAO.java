@@ -11,7 +11,7 @@ public interface DolceServiceDAO {
 
 	boolean rimuoviDolce(Long id);
 
-	boolean addDolce(Dolce dolce, Ricetta ricetta);
+	boolean addDolce(Dolce dolce, long id);
 
 	List<Dolce> findAllDolci();
 

@@ -2,9 +2,11 @@ package it.dstech.models;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -19,7 +21,8 @@ public class Dolce {
 	
 	private int quantita;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinColumn (name="ricetta")
 	private Ricetta ricetta;
 	
 	private double costoDolce20;

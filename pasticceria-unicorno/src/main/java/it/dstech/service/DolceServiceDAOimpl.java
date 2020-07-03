@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 import it.dstech.models.Dolce;
 import it.dstech.models.Ricetta;
 import it.dstech.repository.DolceRepository;
+import it.dstech.repository.RicettaRepository;
 
 @Service
 public class DolceServiceDAOimpl implements DolceServiceDAO{
+	@Autowired
+	RicettaRepository ricettaRepo;
 	
 	@Autowired
 	DolceRepository dolceRepo;
@@ -32,14 +35,20 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 	}
 
 	@Override
-	public boolean addDolce(Dolce dolce, Ricetta ricetta) {
-		dolce.setRicetta(ricetta);
+	public boolean addDolce(Dolce dolce, long id) {
+		Ricetta r = ricettaRepo.findById(id);
+		dolce.setRicetta(r);
+		r.getDolce().add(dolce);
 		if (dolceRepo.existsById(dolce.getId())) {
 			Dolce sovrascriviDolce = dolce;
 			dolceRepo.save(sovrascriviDolce);
+			r.setId(id);
+			ricettaRepo.save(r);
 		}
 
 		Dolce save = dolceRepo.save(dolce);
+		r.setId(id);
+		ricettaRepo.save(r);
 		return save != null;
 	}
 
