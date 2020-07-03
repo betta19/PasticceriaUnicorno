@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -19,7 +20,7 @@ public class Ingrediente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@OneToMany (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToMany (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private List<Ricetta> ricetta;
 	
 	private String nome;

@@ -22,7 +22,7 @@ public class IngredienteServiceDAOImpl implements IngredienteServiceDAO {
 	@Override
 	public boolean rimuoviIngrediente(Long id) {
 		Ingrediente ingrediente = ingredienteRepo.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+				.orElseThrow(() -> new IllegalArgumentException("Invalid ingrediente Id:" + id));
 		ingredienteRepo.delete(ingrediente);
 		return true;
 
@@ -61,8 +61,9 @@ public class IngredienteServiceDAOImpl implements IngredienteServiceDAO {
 
 	@Override
 	public Ingrediente aggiungiIngredienteARicetta(Long id, Ricetta ricetta) {
+		
 		Ingrediente ingrediente = ingredienteRepo.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+				.orElseThrow(() -> new IllegalArgumentException("Invalid ingrediente Id:" + id));
 		ingrediente.setId(id);
 		ingrediente.getRicetta().add(ricetta);
 		ingredienteRepo.save(ingrediente);

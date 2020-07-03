@@ -34,7 +34,7 @@ public class Ricetta {
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Dolce> dolce;
 	
-	@OneToMany
+	@ManyToMany
 	private List<Ingrediente> ingrediente;
 	
 	private String descrizione;
