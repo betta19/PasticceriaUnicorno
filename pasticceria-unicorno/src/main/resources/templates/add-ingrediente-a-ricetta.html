@@ -11,9 +11,9 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<form action="#" th:action="@{/salvaIngredientiRicetta}"
+	<form action="#" th:action="@{/salvaIngredientiRicetta/{id}(id=${ingrediente.id})}"
 		th:object="${ingrediente}" >
-		<input type="hidden" th:field="${ricetta.id}" name="id"/>
+		<input type="hidden" th:value="${ricetta.id}" name="idRicetta"/>
 		<h2 th:text="${ricetta.nome}"></h2>
 		<br> <br>
 		<div th:switch="${listaIngrediente}" class="container my-5">
@@ -39,9 +39,9 @@
 									<td th:text="${ingrediente.nome}"></td>
 									<td th:text="${ingrediente.costoIngrediente}"></td>
 									<td th:text="${ingrediente.disponibile}"></td>
-									<td><a
-										th:href="@{/salvaIngredientiRicetta/{id}(id=${ingrediente.id})}"
-										class="btn btn-primary"></a></td>
+									<td>
+										<input type="submit" class="btn btn-primary" value="Add Ingrediente">
+										
 
 
 								</tr>

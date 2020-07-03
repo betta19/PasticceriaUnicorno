@@ -1,9 +1,16 @@
 package it.dstech.models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Ingrediente {
@@ -11,6 +18,9 @@ public class Ingrediente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	
+	@OneToMany (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+	private List<Ricetta> ricetta;
 	
 	private String nome;
 	
@@ -48,6 +58,17 @@ public class Ingrediente {
 
 	public void setDisponibile(boolean disponibile) {
 		this.disponibile = disponibile;
+	}
+
+	
+	
+
+	public List<Ricetta> getRicetta() {
+		return ricetta;
+	}
+
+	public void setRicetta(List<Ricetta> ricetta) {
+		this.ricetta = ricetta;
 	}
 
 	@Override

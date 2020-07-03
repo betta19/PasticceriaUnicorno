@@ -191,13 +191,13 @@ public class PasticceriaController {
 		return "add-ingrediente-a-ricetta";
 	}
 	
-	@GetMapping("/salvaIngredientiRicetta/{id}")
-	public String addIngredientiRicetta(@PathVariable("id") long id, Model model, Ricetta ricetta) {
-		Ricetta recipe= ricettaService.findById(ricetta.getId());
+	@GetMapping("/salvaIngredientiRicetta")
+	public String addIngredientiRicetta(@PathVariable("id") long id, Model model,  @RequestParam("idRicetta") String idRicetta) {
+		Ricetta recipe= ricettaService.findById(Long.parseLong(idRicetta));
 //		recipe.setId(ricetta.getId());
-		recipe.getIngrediente().add(ingredienteService.aggiungiIngredienteARicetta(id));
+		recipe.getIngrediente().add(ingredienteService.aggiungiIngredienteARicetta(id, recipe));
 		ricettaService.addRicetta(recipe);
-	
+		
 		model.addAttribute("listaIngrediente", ingredienteService.findAllIngrediente());
 		model.addAttribute("ricetta", recipe);
 		return "add-ingrediente-a-ricetta";

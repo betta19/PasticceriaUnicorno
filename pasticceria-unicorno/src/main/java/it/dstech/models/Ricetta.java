@@ -2,6 +2,7 @@ package it.dstech.models;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.lang.Nullable;
+
+import com.sun.istack.NotNull;
 
 @Entity
 public class Ricetta {
@@ -33,6 +39,7 @@ public class Ricetta {
 	
 	private String descrizione;
 	
+	@Column(nullable = true)
 	private double costoRicetta10;
 
 	public long getId() {
