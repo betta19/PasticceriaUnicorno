@@ -13,4 +13,5 @@ public interface OrdinazioneRepository extends JpaRepository<Ordinazione, Long>{
 	public List<Ordinazione> findByCompletatoTrue();
 
 	public List<Ordinazione> findByCompletatoFalse();
+	
 }

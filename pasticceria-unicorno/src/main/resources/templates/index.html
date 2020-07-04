@@ -26,6 +26,7 @@
 								<th>Cognome</th>
 								<th>Modifica</th>
 								<th>Elimina</th>
+								<th>Gestisci Ordinazione</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -35,6 +36,8 @@
 								<td><a th:href="@{/modificaC/{id}(id=${cliente.id})}"
 									class="btn btn-primary"></a></td>
 								<td><a th:href="@{/eliminaC/{id}(id=${cliente.id})}"
+								class="btn btn-primary"></a></td>
+								<td><a th:href="@{/gestioneOrdiniCliente/{id}(id=${cliente.id})}"
 								class="btn btn-primary"></a></td>
 							</tr>
 						</tbody>

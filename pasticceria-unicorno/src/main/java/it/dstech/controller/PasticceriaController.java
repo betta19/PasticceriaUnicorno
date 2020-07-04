@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.dstech.models.Cliente;
 import it.dstech.models.Dolce;
 import it.dstech.models.Ingrediente;
+import it.dstech.models.Ordinazione;
 import it.dstech.models.Ricetta;
 import it.dstech.repository.ClienteRepository;
 import it.dstech.repository.RicettaRepository;
@@ -254,5 +255,41 @@ public class PasticceriaController {
 	
 	
 	
-
+	@GetMapping("/gestioneOrdiniCliente/{id}")
+	public String gestisciOrdinazioneCliente(Cliente cliente, Ordinazione ordinazione, Model model) {
+		model.addAttribute("listaOrdinazione", ordinazioneService.listaOrdiniCliente(cliente.getId()));
+		model.addAttribute("listaDolce", dolceService.findAllDolci());
+		model.addAttribute("cliente", cliente);
+		
+		return "add-ordinazione";
+	}
+	
+	@PostMapping("/addOrdinazione")
+	public String addOrdine(@RequestParam(value = "dolci" , required = false) long[] idDolce ,@RequestParam("idCliente") String idCliente,  Ordinazione ordinazione, Model model) {
+	
+		Cliente cliente = new Cliente();
+		
+		if(idDolce != null) {
+			
+		    for (int i = 0; i < idDolce.length; i++) {
+		    	Dolce dolce = dolceService.findById(idDolce[i]);
+		    	if(dolce != null) {
+		    	dolce = new  Dolce();
+		    	dolce.setId(idDolce[i]);
+		    	ordinazione.getDolce().add(dolceService.aggiungiOrdinazioneADolce(idDolce[i], ordinazione));
+				ordinazioneService.addOrdinazione(ordinazione); 
+				cliente = clienteService.findById(Long.parseLong(idCliente));
+		    	cliente.getOrdinazioni().add(ordinazione);
+		    	clienteService.addCliente(cliente);
+		        }
+		    }
+		    	
+		}
+		model.addAttribute("listaOrdinazione", ordinazioneService.listaOrdiniCliente(Long.parseLong(idCliente)));
+		model.addAttribute("listaDolce", dolceService.findAllDolci());
+		model.addAttribute("cliente", cliente);
+		return "add-ordinazione";
+	
+	}
+	
 }

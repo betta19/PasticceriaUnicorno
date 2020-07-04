@@ -1,5 +1,7 @@
 package it.dstech.models;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -25,6 +28,17 @@ public class Dolce {
 	@JoinColumn (name="ricetta")
 	private Ricetta ricetta;
 	
+	@ManyToMany (cascade = CascadeType.PERSIST)
+	private List<Ordinazione> ordinazione;
+	
+	public List<Ordinazione> getOrdinazione() {
+		return ordinazione;
+	}
+
+	public void setOrdinazione(List<Ordinazione> ordinazione) {
+		this.ordinazione = ordinazione;
+	}
+
 	private double costoDolce20;
 
 	public long getId() {

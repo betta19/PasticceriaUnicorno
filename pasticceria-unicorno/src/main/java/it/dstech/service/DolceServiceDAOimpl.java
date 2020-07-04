@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.dstech.models.Dolce;
+import it.dstech.models.Ingrediente;
+import it.dstech.models.Ordinazione;
 import it.dstech.models.Ricetta;
 import it.dstech.repository.DolceRepository;
 import it.dstech.repository.RicettaRepository;
@@ -57,4 +59,21 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 		return dolceRepo.findAll();
 	}
 
-}
+	@Override
+	public Dolce findById(long l) {
+		
+		return dolceRepo.findById(l);
+	}
+
+	@Override
+	public Dolce aggiungiOrdinazioneADolce(Long l, Ordinazione ordinazione) {
+		
+			Dolce dolce = dolceRepo.findById(l).orElseThrow(() -> new IllegalArgumentException("Invalid ingrediente Id:" + l));
+			dolce.setId(l);
+			dolce.getOrdinazione().add(ordinazione);
+			dolceRepo.save(dolce);
+			return dolce;
+		}
+
+	}
+
