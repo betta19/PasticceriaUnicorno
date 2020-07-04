@@ -267,7 +267,7 @@ public class PasticceriaController {
 	@PostMapping("/addOrdinazione")
 	public String addOrdine(@RequestParam(value = "dolci" , required = false) long[] idDolce ,@RequestParam("idCliente") String idCliente,  Ordinazione ordinazione, Model model) {
 	
-		Cliente cliente = new Cliente();
+		
 		
 		if(idDolce != null) {
 			
@@ -277,17 +277,17 @@ public class PasticceriaController {
 		    	dolce = new  Dolce();
 		    	dolce.setId(idDolce[i]);
 		    	ordinazione.getDolce().add(dolceService.aggiungiOrdinazioneADolce(idDolce[i], ordinazione));
+		    	ordinazione.setCliente(clienteService.findById(Long.parseLong(idCliente)));
 				ordinazioneService.addOrdinazione(ordinazione); 
-				cliente = clienteService.findById(Long.parseLong(idCliente));
-		    	cliente.getOrdinazioni().add(ordinazione);
-		    	clienteService.addCliente(cliente);
+				clienteService.findById(Long.parseLong(idCliente)).getOrdinazioni().add(ordinazione);
+				clienteService.addCliente(clienteService.findById(Long.parseLong(idCliente)));
 		        }
 		    }
 		    	
 		}
 		model.addAttribute("listaOrdinazione", ordinazioneService.listaOrdiniCliente(Long.parseLong(idCliente)));
 		model.addAttribute("listaDolce", dolceService.findAllDolci());
-		model.addAttribute("cliente", cliente);
+		model.addAttribute("cliente", clienteService.findById(Long.parseLong(idCliente)));
 		return "add-ordinazione";
 	
 	}

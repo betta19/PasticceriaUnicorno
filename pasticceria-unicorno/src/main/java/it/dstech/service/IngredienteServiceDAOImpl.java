@@ -34,6 +34,7 @@ public class IngredienteServiceDAOImpl implements IngredienteServiceDAO {
 
 		if (ingredienteRepo.existsById(ingrediente.getId())) {
 			Ingrediente sovrascriviIngrediente = ingrediente;
+			sovrascriviIngrediente.setId(ingrediente.getId());
 			ingredienteRepo.save(sovrascriviIngrediente);
 		}
 

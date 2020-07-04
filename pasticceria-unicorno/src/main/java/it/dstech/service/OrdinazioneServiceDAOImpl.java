@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import it.dstech.models.Cliente;
 import it.dstech.models.Dolce;
+import it.dstech.models.Ingrediente;
 import it.dstech.models.Ordinazione;
 import it.dstech.models.Ricetta;
 import it.dstech.repository.ClienteRepository;
@@ -33,8 +34,11 @@ public class OrdinazioneServiceDAOImpl implements OrdinazioneServiceDAO{
 
 	@Override
 	public boolean addOrdinazione(Ordinazione ordinazione) {
+		if (ordinazioneRepo.existsById(ordinazione.getId())) {
+			Ordinazione sovrascriviOrdinazione = ordinazione;
+			ordinazioneRepo.save(sovrascriviOrdinazione);
+		}
 		Ordinazione save = ordinazioneRepo.save(ordinazione);
-	
 		return save != null;
 		
 	}

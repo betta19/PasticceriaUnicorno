@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,9 +34,10 @@ public class Ordinazione {
 
     private String dataConsegna;
 	
+    @Column(nullable = true)
 	private double costoOrdinazione;
 	
-	
+    @Column(nullable = true)
 	private boolean completato;
 
 	public boolean isCompletato() {
