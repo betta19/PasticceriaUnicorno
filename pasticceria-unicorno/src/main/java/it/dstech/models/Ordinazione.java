@@ -1,25 +1,16 @@
 package it.dstech.models;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Ordinazione {
@@ -31,9 +22,8 @@ public class Ordinazione {
 	@ManyToOne
 	private Cliente cliente;
 	
-	@ElementCollection
-	@Column(name="nomeDolce", nullable = true)
-	private List<String> dolce;
+	@ManyToMany
+	private List<Dolce> dolce;
 
     private String dataConsegna;
 	
@@ -67,11 +57,11 @@ public class Ordinazione {
 		this.cliente = cliente;
 	}
 
-	public List<String> getDolce() {
+	public List<Dolce> getDolce() {
 		return dolce;
 	}
 
-	public void setDolce(List<String> dolce) {
+	public void setDolce(List<Dolce> dolce) {
 		this.dolce = dolce;
 	}
 
@@ -90,6 +80,12 @@ public class Ordinazione {
 
 	public void setDataConsegna(String dataConsegna) {
 		this.dataConsegna = dataConsegna;
+	}
+
+	@Override
+	public String toString() {
+		return "Ordinazione [id=" + id + ", cliente=" + cliente + ", dolce=" + dolce + ", dataConsegna=" + dataConsegna
+				+ ", costoOrdinazione=" + costoOrdinazione + ", completato=" + completato + "]";
 	}
 	
 	

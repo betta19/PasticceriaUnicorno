@@ -18,7 +18,7 @@ public interface DolceServiceDAO {
 
 	Dolce findById(long l);
 
-	public void aggiungiOrdinazioneADolce(Dolce dolce, Ordinazione ordinazione, Cliente cliente);
+	public Dolce aggiungiOrdinazioneADolce(Long id, Ordinazione ordinazione);
 
 
 }

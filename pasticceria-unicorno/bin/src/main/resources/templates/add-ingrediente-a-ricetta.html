@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Add Ingredients</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+	<form action="#" th:action="@{/salvaIngredientiRicetta}"
+		th:object="${ingrediente}">
+		<input type="hidden" th:value="${ricetta.id}" name="idRicetta" /> 
+		<h2 th:text="${ricetta.nome}"></h2>
+		<br> <br>
+		<div th:switch="${listaIngrediente}" class="container my-5">
+			<div class="row">
+				<div class="col-md-6" align="left">
+					<h2 th:case="null">No ingredients yet!</h2>
+					<div th:case="*">
+						<h2 class="my-5">Ingredienti</h2>
+						<th:block th:each="ingrediente : ${listaIngrediente}">
+							<input type="checkbox" name="ingredienti" required="required"
+								th:value="${ingrediente.id}" />
+							<label th:text="${ingrediente.nome}"></label>
+						</th:block>
+						<input type="submit" class="btn btn-primary"
+							value="Add Ingrediente">
+
+					</div>
+
+				</div>
+				<br> <br>
+			</div>
+		</div>
+	</form>
+	<h2>Fatto!</h2>
+	<a th:href="@{/fineRicetta}" class="btn btn-primary"></a>
+
+
+
+
+</body>
+</html>

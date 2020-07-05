@@ -81,14 +81,16 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 	}
 
 	@Override
-	public void aggiungiOrdinazioneADolce(Dolce dolce, Ordinazione ordinazione, Cliente cliente) {
+	public Dolce aggiungiOrdinazioneADolce(Long id, Ordinazione ordinazione) {
 		
-	    	dolceRepo.save(dolce);
-	    	ordinazione.getDolce().add(dolce.getNome());
-	    	ordinazioneService.addOrdinazione(ordinazione); 
-			clienteService.findById(cliente.getId()).getOrdinazioni().add(ordinazione);
-			clienteService.addCliente(clienteService.findById(cliente.getId()));
-
+			Dolce dolce = dolceRepo.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid dolce Id:" + id));
+			dolce.setId(id);
+			dolce.getOrdinazione().add(ordinazione);
+			dolceRepo.save(dolce);
+			return dolce;
+	    	
 		}
+	
 	}
 

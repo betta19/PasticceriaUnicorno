@@ -1,6 +1,7 @@
 package it.dstech.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -269,12 +270,18 @@ public class PasticceriaController {
 		    for (int i = 0; i < idDolce.length; i++) {
 		    	Dolce dolce = dolceService.findById(idDolce[i]);
 		    	if(dolce != null) {
-		    	dolce.setId(idDolce[i]);
-				Ordinazione nuovoOrdine = new Ordinazione();
-				nuovoOrdine = ordinazione;
-				nuovoOrdine.setCliente(clienteService.findById(Long.parseLong(idCliente)));
-		    	dolce.setId(dolce.getId());
-		    	dolceService.aggiungiOrdinazioneADolce(dolce, nuovoOrdine, clienteService.findById(Long.parseLong(idCliente)));
+	    		dolce = new Dolce();
+	    		dolce.setId(idDolce[i]);
+	    		
+	    		
+	    		
+	    		List<Dolce> listaDolci = new ArrayList<Dolce>();
+	    		listaDolci.add(dolceService.aggiungiOrdinazioneADolce(idDolce[i], ordinazione));
+	    		ordinazione.setDolce(listaDolci);;
+	    		ordinazione.setCliente(clienteService.findById(Long.parseLong(idCliente)));
+		    	ordinazioneService.addOrdinazione(ordinazione); 
+		    	clienteService.findById(Long.parseLong(idCliente)).getOrdinazioni().add(ordinazione);
+				clienteService.addCliente(clienteService.findById(Long.parseLong(idCliente)));
 		    	
 		    	}	
 		    }

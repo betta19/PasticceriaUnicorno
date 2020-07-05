@@ -24,11 +24,12 @@ public class Dolce {
 	
 	private int quantita;
 	
-	@ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne (cascade = CascadeType.PERSIST)
 	@JoinColumn (name="ricetta")
 	private Ricetta ricetta;
 	
-	
+	@ManyToMany (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+	private List<Ordinazione> ordinazione;
 
 	private double costoDolce20;
 
@@ -71,8 +72,19 @@ public class Dolce {
 	public void setCostoDolce20(double costoDolce20) {
 		this.costoDolce20 = costoDolce20;
 	}
-	
-	
+
+	public List<Ordinazione> getOrdinazione() {
+		return ordinazione;
+	}
+
+	public void setOrdinazione(List<Ordinazione> ordinazione) {
+		this.ordinazione = ordinazione;
+	}
+
+	@Override
+	public String toString() {
+		return "Dolce [nome=" + nome + ", quantita=" + quantita + ", costoDolce20=" + costoDolce20 + "]";
+	}
 
 	
 	
