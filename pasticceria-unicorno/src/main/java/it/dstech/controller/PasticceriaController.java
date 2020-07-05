@@ -1,18 +1,15 @@
 package it.dstech.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.dstech.models.Cliente;
@@ -20,8 +17,6 @@ import it.dstech.models.Dolce;
 import it.dstech.models.Ingrediente;
 import it.dstech.models.Ordinazione;
 import it.dstech.models.Ricetta;
-import it.dstech.repository.ClienteRepository;
-import it.dstech.repository.RicettaRepository;
 import it.dstech.service.AmministratoreServiceDAO;
 import it.dstech.service.ClienteServiceDAO;
 import it.dstech.service.DolceServiceDAO;
@@ -256,10 +251,10 @@ public class PasticceriaController {
 	
 	
 	@GetMapping("/gestioneOrdiniCliente/{id}")
-	public String gestisciOrdinazioneCliente(Cliente cliente, Ordinazione ordinazione, Model model) {
-		model.addAttribute("listaOrdinazione", ordinazioneService.listaOrdiniCliente(cliente.getId()));
+	public String gestisciOrdinazioneCliente(@PathVariable("id") long id, Ordinazione ordinazione, Model model) {
+		model.addAttribute("listaOrdinazione", ordinazioneService.listaOrdiniCliente(id));
 		model.addAttribute("listaDolce", dolceService.findAllDolci());
-		model.addAttribute("cliente", cliente);
+		model.addAttribute("cliente", clienteService.findById(id));
 		
 		return "add-ordinazione";
 	}
@@ -274,17 +269,18 @@ public class PasticceriaController {
 		    for (int i = 0; i < idDolce.length; i++) {
 		    	Dolce dolce = dolceService.findById(idDolce[i]);
 		    	if(dolce != null) {
-		    	dolce = new  Dolce();
 		    	dolce.setId(idDolce[i]);
-		    	ordinazione.getDolce().add(dolceService.aggiungiOrdinazioneADolce(idDolce[i], ordinazione));
-		    	ordinazione.setCliente(clienteService.findById(Long.parseLong(idCliente)));
-				ordinazioneService.addOrdinazione(ordinazione); 
-				clienteService.findById(Long.parseLong(idCliente)).getOrdinazioni().add(ordinazione);
-				clienteService.addCliente(clienteService.findById(Long.parseLong(idCliente)));
-		        }
+				Ordinazione nuovoOrdine = new Ordinazione();
+				nuovoOrdine = ordinazione;
+				nuovoOrdine.setCliente(clienteService.findById(Long.parseLong(idCliente)));
+		    	dolce.setId(dolce.getId());
+		    	dolceService.aggiungiOrdinazioneADolce(dolce, nuovoOrdine, clienteService.findById(Long.parseLong(idCliente)));
+		    	
+		    	}	
 		    }
 		    	
 		}
+		
 		model.addAttribute("listaOrdinazione", ordinazioneService.listaOrdiniCliente(Long.parseLong(idCliente)));
 		model.addAttribute("listaDolce", dolceService.findAllDolci());
 		model.addAttribute("cliente", clienteService.findById(Long.parseLong(idCliente)));
@@ -292,4 +288,4 @@ public class PasticceriaController {
 	
 	}
 	
-}
+	}

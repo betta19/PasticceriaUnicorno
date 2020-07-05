@@ -5,11 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.dstech.models.Cliente;
 import it.dstech.models.Dolce;
 import it.dstech.models.Ingrediente;
 import it.dstech.models.Ordinazione;
 import it.dstech.models.Ricetta;
+import it.dstech.repository.ClienteRepository;
 import it.dstech.repository.DolceRepository;
+import it.dstech.repository.OrdinazioneRepository;
 import it.dstech.repository.RicettaRepository;
 
 @Service
@@ -19,6 +22,18 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 	
 	@Autowired
 	DolceRepository dolceRepo;
+	
+	@Autowired
+	OrdinazioneRepository ordinazioneRepo;
+	
+	@Autowired
+	ClienteRepository clienteRepo;
+	
+	@Autowired
+	ClienteServiceDAO clienteService;
+	
+	@Autowired
+	OrdinazioneServiceDAO ordinazioneService;
 
 	@Override
 	public boolean modificaDolce(Dolce d) {
@@ -66,14 +81,14 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 	}
 
 	@Override
-	public Dolce aggiungiOrdinazioneADolce(Long l, Ordinazione ordinazione) {
+	public void aggiungiOrdinazioneADolce(Dolce dolce, Ordinazione ordinazione, Cliente cliente) {
 		
-			Dolce dolce = dolceRepo.findById(l).orElseThrow(() -> new IllegalArgumentException("Invalid ingrediente Id:" + l));
-			dolce.setId(l);
-			dolce.getOrdinazione().add(ordinazione);
-			dolceRepo.save(dolce);
-			return dolce;
-		}
+	    	dolceRepo.save(dolce);
+	    	ordinazione.getDolce().add(dolce.getNome());
+	    	ordinazioneService.addOrdinazione(ordinazione); 
+			clienteService.findById(cliente.getId()).getOrdinazioni().add(ordinazione);
+			clienteService.addCliente(clienteService.findById(cliente.getId()));
 
+		}
 	}
 

@@ -28,16 +28,7 @@ public class Dolce {
 	@JoinColumn (name="ricetta")
 	private Ricetta ricetta;
 	
-	@ManyToMany (cascade = CascadeType.PERSIST)
-	private List<Ordinazione> ordinazione;
 	
-	public List<Ordinazione> getOrdinazione() {
-		return ordinazione;
-	}
-
-	public void setOrdinazione(List<Ordinazione> ordinazione) {
-		this.ordinazione = ordinazione;
-	}
 
 	private double costoDolce20;
 

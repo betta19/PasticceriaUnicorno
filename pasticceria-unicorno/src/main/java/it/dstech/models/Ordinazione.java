@@ -4,7 +4,9 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,8 +31,9 @@ public class Ordinazione {
 	@ManyToOne
 	private Cliente cliente;
 	
-	@ManyToMany (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
-	private List<Dolce> dolce;
+	@ElementCollection
+	@Column(name="nomeDolce", nullable = true)
+	private List<String> dolce;
 
     private String dataConsegna;
 	
@@ -64,11 +67,11 @@ public class Ordinazione {
 		this.cliente = cliente;
 	}
 
-	public List<Dolce> getDolce() {
+	public List<String> getDolce() {
 		return dolce;
 	}
 
-	public void setDolce(List<Dolce> dolce) {
+	public void setDolce(List<String> dolce) {
 		this.dolce = dolce;
 	}
 
