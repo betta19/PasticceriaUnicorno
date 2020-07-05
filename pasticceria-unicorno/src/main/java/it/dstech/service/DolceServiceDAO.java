@@ -20,5 +20,7 @@ public interface DolceServiceDAO {
 
 	public Dolce aggiungiOrdinazioneADolce(Long id, Ordinazione ordinazione);
 
+	double costoDolce(Dolce dolce);
+
 
 }

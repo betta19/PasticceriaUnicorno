@@ -21,10 +21,12 @@ public class AmministratoreServiceDAOImpl implements AmministratoreServiceDAO {
 	@Autowired
 	public OrdinazioneRepository ordinazioneRepo;
 
+	@Override
 	public List<Ordinazione> listaOrdinazioniPassate() {
 		return ordinazioneRepo.findByCompletatoTrue();
 	}
 	
+	@Override
 	public List<Ordinazione> listaOrdinazioniNuove() {
 		return ordinazioneRepo.findByCompletatoFalse();
 	}

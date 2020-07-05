@@ -9,4 +9,8 @@ public interface OrdinazioneServiceDAO {
 	List<Ordinazione> listaOrdiniCliente(long id);
 
 	boolean addOrdinazione(Ordinazione ordinazione);
+
+	double costoOrdinazione(long id);
+
+	Ordinazione findById(long l);
 }

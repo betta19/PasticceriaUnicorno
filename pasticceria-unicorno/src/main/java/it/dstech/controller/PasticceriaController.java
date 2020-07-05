@@ -202,6 +202,7 @@ public class PasticceriaController {
 		    	ingrediente = new  Ingrediente();
 		    	ingrediente.setId(idIngredienti[i]);
 		    	recipe.getIngrediente().add(ingredienteService.aggiungiIngredienteARicetta(idIngredienti[i], recipe));
+		    	ricettaService.costoRicetta(recipe);
 				ricettaService.addRicetta(recipe); 
 		        }
 		    }
@@ -279,6 +280,7 @@ public class PasticceriaController {
 	    		listaDolci.add(dolceService.aggiungiOrdinazioneADolce(idDolce[i], ordinazione));
 	    		ordinazione.setDolce(listaDolci);;
 	    		ordinazione.setCliente(clienteService.findById(Long.parseLong(idCliente)));
+	    		ordinazione.setCostoOrdinazione(ordinazioneService.costoOrdinazione(idDolce[i]));
 		    	ordinazioneService.addOrdinazione(ordinazione); 
 		    	clienteService.findById(Long.parseLong(idCliente)).getOrdinazioni().add(ordinazione);
 				clienteService.addCliente(clienteService.findById(Long.parseLong(idCliente)));
@@ -295,4 +297,23 @@ public class PasticceriaController {
 	
 	}
 	
+	@GetMapping("/gestioneOrdiniAdmin")
+	public String gestisciOrdinazioneAdmin(Model model) {
+		model.addAttribute("listaCompletato", amministratoreService.listaOrdinazioniPassate());
+		model.addAttribute("listaDaCompletare", amministratoreService.listaOrdinazioniNuove());
+
+		return "gestione-ordini";
+	}
+	
+	@GetMapping ("/chiudi/{id}")
+	public String chiudiOrdine (@PathVariable("id") long id, Model model) {
+		Ordinazione ordine = ordinazioneService.findById(id);
+		ordine.setCompletato(true);
+		ordine.setId(id);
+		ordinazioneService.addOrdinazione(ordine);
+		model.addAttribute("listaCompletato", amministratoreService.listaOrdinazioniPassate());
+		model.addAttribute("listaDaCompletare", amministratoreService.listaOrdinazioniNuove());
+
+		return "gestione-ordini";
+	}
 	}

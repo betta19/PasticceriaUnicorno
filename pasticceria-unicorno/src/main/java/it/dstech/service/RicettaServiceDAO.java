@@ -15,4 +15,5 @@ public interface RicettaServiceDAO {
 
 	Ricetta findById(long id);
 
+	Ricetta costoRicetta (Ricetta ricetta);
 }

@@ -23,7 +23,7 @@
 					<div th:case="*">
 						<h2 class="my-5">Ingredienti</h2>
 						<th:block th:each="ingrediente : ${listaIngrediente}">
-							<input type="checkbox" name="ingredienti" required="required"
+							<input type="checkbox" name="ingredienti" 
 								th:value="${ingrediente.id}" />
 							<label th:text="${ingrediente.nome}"></label>
 						</th:block>

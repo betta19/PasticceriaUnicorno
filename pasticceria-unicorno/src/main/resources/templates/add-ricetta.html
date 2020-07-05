@@ -25,6 +25,7 @@
 								<th>Difficoltà</th>
 								<th>Ingredienti</th>
 								<th>Descrizione</th>
+								<th>Costo</th>
 								<th>Elimina</th>
 							</tr>
 						</thead>
@@ -35,6 +36,7 @@
 								<td th:text="${ricetta.difficolta}"></td>
 								<td th:text="${ricetta.ingrediente}"></td>
 								<td th:text="${ricetta.descrizione}"></td>
+								<td th:text="${ricetta.costoRicetta10}"></td>
 								<td><a th:href="@{/eliminaR/{id}(id=${ricetta.id})}"
 									class="btn btn-primary"></a></td>
 

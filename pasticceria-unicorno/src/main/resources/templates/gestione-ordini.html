@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Add Order</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+	</head>
+<body>
+
+	<div th:switch="${listaDaCompletare}" class="container my-5">
+		<div class="row">
+			<div class="col-md-6" align="left">
+				<h2 th:case="null">No Order yet!</h2>
+				<div th:case="*">
+					<h2 class="my-5">Chiudi ordini</h2>
+					<table class="table table-striped table-responsive-md">
+						<thead>
+							<tr>
+								<th>Dolci</th>
+								<th>Data Consegna</th>
+								<th>Costo</th>
+								<th>Chiudi</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="order : ${listaDaCompletare}">
+								<td th:text="${order.dolce}"></td>
+								<td th:text="${order.dataConsegna}"></td>
+								<td th:text="${order.costoOrdinazione}"></td>
+								<td><a th:href="@{/chiudi/{id}(id=${order.id})}"
+									class="btn btn-primary"></a></td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+
+
+			<br> <br>
+		</div>
+	</div>
+
+	<div th:switch="${listaCompletato}" class="container my-5">
+		<div class="row">
+			<div class="col-md-6" align="left">
+				<h2 th:case="null">No Order yet!</h2>
+				<div th:case="*">
+					<h2 class="my-5">Ordini completati</h2>
+					<table class="table table-striped table-responsive-md">
+						<thead>
+							<tr>
+								<th>Dolci</th>
+								<th>Data Consegna</th>
+								<th>Costo</th>
+							
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="order : ${listaCompletato}">
+								<td th:text="${order.dolce}"></td>
+								<td th:text="${order.dataConsegna}"></td>
+								<td th:text="${order.costoOrdinazione}"></td>
+							
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+
+
+			<br> <br>
+		</div>
+	</div>
+</body>
+</html>

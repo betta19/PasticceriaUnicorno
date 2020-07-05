@@ -47,8 +47,15 @@ public class RicettaServiceDAOImpl implements RicettaServiceDAO{
 
 		Ricetta save = ricettaRepo.save(ricetta);
 		return save != null;
-
-		
 	}
-
+	
+	@Override
+	public Ricetta costoRicetta (Ricetta r) {
+		double costo = 0;
+		for (int i = 0; i < r.getIngrediente().size(); i++) {
+			costo += r.getIngrediente().get(i).getCostoIngrediente();
+		} 
+		r.setCostoRicetta10(costo + (costo * 0.1));
+		return r;
+	}
 }

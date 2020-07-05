@@ -56,6 +56,7 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 		Ricetta r = ricettaRepo.findById(id);
 		dolce.setRicetta(r);
 		r.getDolce().add(dolce);
+		dolce.setCostoDolce20(costoDolce(dolce));
 		if (dolceRepo.existsById(dolce.getId())) {
 			Dolce sovrascriviDolce = dolce;
 			dolceRepo.save(sovrascriviDolce);
@@ -91,6 +92,12 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 			return dolce;
 	    	
 		}
-	
+	@Override
+	public double costoDolce (Dolce d) {
+		double costo = 0;
+	costo += d.getRicetta().getCostoRicetta10();
+	 
+	return costo +(costo * 0.2);
+	}
 	}
 

@@ -43,4 +43,15 @@ public class OrdinazioneServiceDAOImpl implements OrdinazioneServiceDAO{
 		
 	}
 
+	@Override
+	public double costoOrdinazione (long id) {
+		double costo = 0;
+		costo += dolceRepo.findById(id).getCostoDolce20();
+		return costo;
+	}
+	@Override
+	public Ordinazione findById(long l) {
+		
+		return ordinazioneRepo.findById(l);
+	}
 }
