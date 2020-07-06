@@ -8,8 +8,6 @@ import it.dstech.models.Ordinazione;
 
 public interface DolceServiceDAO {
 
-	boolean modificaDolce(Dolce d);
-
 	boolean rimuoviDolce(Long id);
 
 	boolean addDolce(Dolce dolce, long id);

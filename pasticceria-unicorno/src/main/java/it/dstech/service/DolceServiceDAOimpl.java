@@ -35,17 +35,18 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 	@Autowired
 	OrdinazioneServiceDAO ordinazioneService;
 
-	@Override
-	public boolean modificaDolce(Dolce d) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean rimuoviDolce(Long id) {
 		
 		Dolce dolce = dolceRepo.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		if (dolce.getOrdinazione() != null) {
+			return false;
+		}
+		dolce.getRicetta().setIngrediente(null);
+		dolce.setRicetta(null);
+		dolceRepo.save(dolce);
 		dolceRepo.delete(dolce);
 		return true;
 		
@@ -99,5 +100,6 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 	 
 	return costo +(costo * 0.2);
 	}
+
 	}
 

@@ -1,8 +1,8 @@
 package it.dstech.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class Ordinazione {
 	@ManyToOne
 	private Cliente cliente;
 	
-	@ManyToMany
+	@ManyToMany (cascade = CascadeType.PERSIST)
 	private List<Dolce> dolce;
 
     private String dataConsegna;

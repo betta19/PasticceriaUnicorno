@@ -2,43 +2,38 @@ package it.dstech.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToMany;
-
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.lang.Nullable;
-
-import com.sun.istack.NotNull;
 
 @Entity
 public class Ricetta {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	private String nome;
-	
-	
+
 	private String tempoDiRealizzazione;
-	
+
 	private int difficolta;
-	
-	@OneToMany
+
+	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Dolce> dolce;
-	
-	@ManyToMany
+
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Ingrediente> ingrediente;
-	
+
 	private String descrizione;
-	
+
 	@Column(nullable = true)
 	private double costoRicetta10;
 
@@ -112,7 +107,5 @@ public class Ricetta {
 				+ ", difficolta=" + difficolta + ", dolce=" + dolce + ", ingrediente=" + ingrediente + ", descrizione="
 				+ descrizione + ", costoRicetta10=" + costoRicetta10 + "]";
 	}
-
-	
 
 }
