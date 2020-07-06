@@ -30,9 +30,10 @@ public class IngredienteServiceDAOImpl implements IngredienteServiceDAO {
 
 	@Override
 	public boolean addIngrediente(Ingrediente ingrediente) {
+		
 		ingrediente.setDisponibile(true);
 
-		if (ingredienteRepo.existsById(ingrediente.getId())) {
+		if (ingredienteRepo.existsIngredienteByNome(ingrediente.getNome())) {
 			Ingrediente sovrascriviIngrediente = ingrediente;
 			sovrascriviIngrediente.setId(ingrediente.getId());
 			ingredienteRepo.save(sovrascriviIngrediente);

@@ -9,4 +9,8 @@ import it.dstech.models.Ingrediente;
 public interface IngredienteRepository extends JpaRepository<Ingrediente, Long>{
 
 	public Ingrediente findById(long id);
+
+	public boolean existsIngredienteByNome(String nome);
+
+
 }

@@ -4,6 +4,8 @@ package it.dstech.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import it.dstech.models.Cliente;
 import it.dstech.models.Dolce;
@@ -45,6 +48,8 @@ public class PasticceriaController {
 
 	@Autowired
 	private RicettaServiceDAO ricettaService;
+	
+	private Logger logger = LoggerFactory.getLogger(PasticceriaController.class);
 
 	@GetMapping("/entra")
 	public String entra(Model model) {
@@ -60,6 +65,7 @@ public class PasticceriaController {
 
 	@PostMapping("/accessoAdmin")
 	public String opzioniAdmin(@RequestParam("nome") String nome, Model model) {
+		logger.info(String.format("L'accesso è stato tenteto da %s", nome));
 		if ("admin".equalsIgnoreCase(nome)) {
 			return "opzioniAdmin";
 		}
@@ -99,6 +105,7 @@ public class PasticceriaController {
 			return "index";
 		}
 		cliente.setId(id);
+		logger.warn(String.format("L'utente sta modificanfo i suoi dati, fai attenzione! %s", cliente.getNome()));
 		clienteService.save(cliente);
 		
 		return "index";
@@ -198,6 +205,7 @@ public class PasticceriaController {
 		   
 		    for (int i = 0; i < idIngredienti.length; i++) {
 		    	Ingrediente ingrediente = ingredienteService.findById(idIngredienti[i]);
+		    	logger.info(String.format("stiamo aggiungendo l'ingrediente %s alla ricetta %s", ingrediente.getNome(), recipe.getNome()));
 		    	if(ingrediente != null) {
 		    	ingrediente = new  Ingrediente();
 		    	ingrediente.setId(idIngredienti[i]);
@@ -205,7 +213,7 @@ public class PasticceriaController {
 		    	ricettaService.costoRicetta(recipe);
 				ricettaService.addRicetta(recipe); 
 		        }
-		    }
+		    } 
 	
 		}
 		model.addAttribute("listaIngrediente", ingredienteService.findAllIngrediente());
@@ -263,25 +271,24 @@ public class PasticceriaController {
 	
 	@PostMapping("/addOrdinazione")
 	public String addOrdine(@RequestParam(value = "dolci" , required = false) long[] idDolce ,@RequestParam("idCliente") String idCliente,  Ordinazione ordinazione, Model model) {
-	
+		
+		Cliente cliente = clienteService.findById(Long.parseLong(idCliente));
 		
 		
 		if(idDolce != null) {
 			
 		    for (int i = 0; i < idDolce.length; i++) {
 		    	Dolce dolce = dolceService.findById(idDolce[i]);
+		    	logger.info(String.format("stiamo aggiungendo il dolce %s all'ordinazione del cliente %s", dolce.getNome(), cliente.getNome()));
 		    	if(dolce != null) {
 	    		dolce = new Dolce();
 	    		dolce.setId(idDolce[i]);
-	    		
-	    		
-	    		
 	    		List<Dolce> listaDolci = new ArrayList<Dolce>();
 	    		listaDolci.add(dolceService.aggiungiOrdinazioneADolce(idDolce[i], ordinazione));
-	    		ordinazione.setDolce(listaDolci);;
-	    		ordinazione.setCliente(clienteService.findById(Long.parseLong(idCliente)));
+	    		ordinazione.setDolce(listaDolci);
+	    		ordinazione.setCliente(cliente);
 	    		ordinazione.setCostoOrdinazione(ordinazioneService.costoOrdinazione(idDolce[i]));
-		    	ordinazioneService.addOrdinazione(ordinazione); 
+	    		ordinazioneService.addOrdinazione(ordinazione); 
 		    	clienteService.findById(Long.parseLong(idCliente)).getOrdinazioni().add(ordinazione);
 				clienteService.addCliente(clienteService.findById(Long.parseLong(idCliente)));
 		    	
@@ -311,6 +318,7 @@ public class PasticceriaController {
 		ordine.setCompletato(true);
 		ordine.setId(id);
 		ordinazioneService.addOrdinazione(ordine);
+		logger.info("stiamo chiudendo l'ordine del cliente %s che ha già effettutato il pagamento di %d Euro", ordine.getCliente().getNome(), ordine.getCostoOrdinazione());
 		model.addAttribute("listaCompletato", amministratoreService.listaOrdinazioniPassate());
 		model.addAttribute("listaDaCompletare", amministratoreService.listaOrdinazioniNuove());
 
