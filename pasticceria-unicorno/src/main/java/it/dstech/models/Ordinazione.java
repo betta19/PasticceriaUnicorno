@@ -22,7 +22,7 @@ public class Ordinazione {
 	@ManyToOne
 	private Cliente cliente;
 	
-	@ManyToMany (cascade = CascadeType.PERSIST)
+	@ManyToMany (cascade = CascadeType.REMOVE)
 	private List<Dolce> dolce;
 
     private String dataConsegna;

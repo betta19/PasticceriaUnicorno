@@ -29,24 +29,6 @@ public class RicettaServiceDAOImpl implements RicettaServiceDAO{
 		Ricetta ricetta = ricettaRepo.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		
-		for (int i = 0; i < ricetta.getIngrediente().size(); i++) {
-	
-			Ingrediente ingrediente = ricetta.getIngrediente().get(i);
-			ricetta.setIngrediente(null);
-			ingrediente.setRicetta(null);
-			ingredienteRepo.save(ingrediente);
-			ricettaRepo.save(ricetta);
-			
-		}
-		
-		for (int i = 0; i < ricetta.getDolce().size(); i++) {
-			Dolce dolce = ricetta.getDolce().get(i);
-			ricetta.setDolce(null);
-			dolce.setRicetta(null);
-			dolceRepo.save(dolce);
-			ricettaRepo.save(ricetta);
-			
-		}
 		ricettaRepo.delete(ricetta);
 		return true;
 		

@@ -41,12 +41,6 @@ public class DolceServiceDAOimpl implements DolceServiceDAO{
 		
 		Dolce dolce = dolceRepo.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		if (dolce.getOrdinazione() != null) {
-			return false;
-		}
-		dolce.getRicetta().setIngrediente(null);
-		dolce.setRicetta(null);
-		dolceRepo.save(dolce);
 		dolceRepo.delete(dolce);
 		return true;
 		

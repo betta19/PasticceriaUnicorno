@@ -26,10 +26,10 @@ public class Ricetta {
 
 	private int difficolta;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Dolce> dolce;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.REMOVE)
 	private List<Ingrediente> ingrediente;
 
 	private String descrizione;
