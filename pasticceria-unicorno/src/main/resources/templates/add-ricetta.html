@@ -16,7 +16,7 @@
 			<div class="col-md-6" align="left">
 				<h2 th:case="null">No recipe yet!</h2>
 				<div th:case="*">
-					<h2 class="my-5">Ricette</h2>
+					<h2 class="my-5">Elenco Ricette</h2>
 					<table class="table table-striped table-responsive-md">
 						<thead>
 							<tr>
@@ -38,7 +38,7 @@
 								<td th:text="${ricetta.descrizione}"></td>
 								<td th:text="${ricetta.costoRicetta10}"></td>
 								<td><a th:href="@{/eliminaR/{id}(id=${ricetta.id})}"
-									class="btn btn-primary"></a></td>
+									class="btn btn-primary"> Elimina Ricetta</a></td>
 
 							</tr>
 						</tbody>
@@ -52,7 +52,7 @@
 		</div>
 	</div>
 	<div class="container my-5">
-		<h2 class="mb-5">New Recipe</h2>
+		<h2 class="mb-5">Aggiungi una nuova ricetta</h2>
 
 		<div class="row">
 			<form action="#" th:action="@{/addRicetta}" th:object="${ricetta}"
